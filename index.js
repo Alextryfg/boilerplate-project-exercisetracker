@@ -117,12 +117,13 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
   user.exercises.push(exercise);
   await user.save();
 
-  res.json({
-    _id : _id,
-    description: description,
+    res.json({
+    _id: user._id,
+    username: user.username,
+    date: date.toDateString(),
     duration: duration,
-    date: date
-  })
+    description: description
+  });
 });
 
 app.get('/api/users/:_id/logs', async (req, res) => {
@@ -137,7 +138,7 @@ app.get('/api/users/:_id/logs', async (req, res) => {
 
     // Si no hay ejercicios, devolvemos un log vacío
     let logs = user.exercises || [];
-    
+
     // Filtrar por fecha "from"
     if (from) {
       const fromDate = new Date(from);
